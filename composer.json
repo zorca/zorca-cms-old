@@ -8,5 +8,7 @@
             "email": "vs@zorca.org"
         }
     ],
-    "require": {}
+    "require": {
+        "symfony/http-foundation": "^2.7"
+    }
 }
