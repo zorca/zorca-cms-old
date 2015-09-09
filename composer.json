@@ -1,0 +1,12 @@
+{
+    "name": "zorca/zorca-cms",
+    "description": "Zorca - Modern Flat-File CMS",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zorca",
+            "email": "vs@zorca.org"
+        }
+    ],
+    "require": {}
+}
