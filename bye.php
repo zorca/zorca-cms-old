@@ -1,2 +1,1 @@
-<?php
-$response->setContent('GoodBye!');
+<?php echo 'До свидания!'; ?>

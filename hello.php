@@ -1,3 +1,2 @@
-<?php
-$input = $request->get('name', 'World');
-$response->setContent(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+<?php $name = $request->get('name', 'Иван Иввнов') ?>
+Здравствуй, <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
