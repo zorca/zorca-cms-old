@@ -1,8 +1,17 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-$input = $request->get('name', 'Default');
+$routeMap = array(
+    '/hello' => __DIR__.'/hello.php',
+    '/bye'   => __DIR__.'/bye.php',
+);
 
-$response->setContent(sprintf('Hello, %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+$path = $request->getPathInfo();
+if (isset($routeMap[$path])) {
+    require $routeMap[$path];
+} else {
+    $response->setStatusCode(404);
+    $response->setContent('Not Found');
+}
 $response->prepare($request);
 $response->send();
