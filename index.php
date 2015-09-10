@@ -1,31 +1,16 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing;
-
-$request = Request::createFromGlobals();
-
-$response = new Response;
-
-$routes = include 'routes.php';
-
-$context = new Routing\RequestContext();
-$context->fromRequest($request);
-
-$matcher = new Routing\Matcher\UrlMatcher($routes, $context);
-
-try {
-    extract($matcher->match($request->getPathInfo()), EXTR_SKIP);
-    ob_start();
-    include sprintf('%s.php', $_route);
-    $response = new Response(ob_get_clean());
-} catch (Routing\Exception\ResourceNotFoundException $e) {
-    $response = new Response('Страница не найдена', 404);
-} catch (Exception $e) {
-    $response = new Response('Обнаружена ошибка', 500);
+// Проверяем версию PHP
+if (version_compare($ver = PHP_VERSION, $req = '5.4.0', '<')) {
+    throw new \RuntimeException(sprintf('Вы используете PHP %s, но системе Zorca CMS для запуска требуется PHP %s.', $ver, $req));
 }
 
-$response->prepare($request);
-$response->send();
+// Проверяем, установлены ли необходимые библиотеки
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (!is_file($autoload)) {
+    throw new \RuntimeException('Не установлены внешние библиотеки. Запустите команду composer install');
+}
+
+// Подгружаем библиотеки
+require_once $autoload;
+
+$zorca = new Zorca\Zorca();
