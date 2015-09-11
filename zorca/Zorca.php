@@ -1,32 +1,34 @@
 <?php
 namespace Zorca;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing;
 class Zorca {
-    private $mainConfig;
-    private $extConfig;
     public function __construct() {
-        //var_dump($this->loadMainConfig());
-        var_dump($this->loadExtConfig());
-    }
-    private function loadMainConfig() {
-        $mainConfigFilePath = BASE . 'app/config.json';
-        $mainConfigDefault = ["skeleton" => "default", "theme" =>"default"];
-        if (file_exists($mainConfigFilePath)) {
-            $this->mainConfig = json_decode(file_get_contents($mainConfigFilePath), true);
-        } else {
-            $this->mainConfig = $mainConfigDefault;
+        $request = Request::createFromGlobals();
+        $routes = new Routing\RouteCollection();
+        $extConfig = $this->loadConfig(BASE . 'ext/ext.json', []);
+        foreach ($extConfig as $extConfigItem) {
+            $routes->add($extConfigItem['extName'], new Routing\Route($extConfigItem['extSlug']));
         }
-        return $this->mainConfig;
-    }
-    private function loadExtConfig() {
-        $extConfigFilePath = BASE . 'ext/ext.json';
-        $extConfigDefault = [];
-        if (file_exists($extConfigFilePath)) {
-            $this->extConfig = json_decode(file_get_contents($extConfigFilePath));
-            if ($this->extConfig == NULL) $this->extConfig = $extConfigDefault;
-        } else {
-            $this->extConfig = $extConfigDefault;
+        $context = new Routing\RequestContext();
+        $context->fromRequest($request);
+        $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
+        try {
+            $matchResult = $matcher->match($request->getPathInfo());
+            $response = new Response('Расширение = '.$matchResult['_route']);
+        } catch (Routing\Exception\ResourceNotFoundException $e) {
+            $response = new Response('Страница не найдена', 404);
+        } catch (\Exception $e) {
+            $response = new Response('Обнаружена ошибка системы', 500);
         }
-        return $this->extConfig;
+        $response->prepare($request);
+        $response->send();
+    }
+    private function loadConfig($configFilePath, $configDefault = []) {
+        $config = $configDefault;
+        if (file_exists($configFilePath)) $config = json_decode(file_get_contents($configFilePath), true);
+        return $config;
     }
 }
