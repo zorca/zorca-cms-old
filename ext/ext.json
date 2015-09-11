@@ -5,6 +5,6 @@
   },
   {
     "extName": "pages",
-    "extSlug": "/page"
+    "extSlug": "/page/{pageSlug}"
   }
 ]
