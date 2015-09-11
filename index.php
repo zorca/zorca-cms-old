@@ -4,6 +4,10 @@ if (version_compare($ver = PHP_VERSION, $req = '5.4.0', '<')) {
     throw new \RuntimeException(sprintf('Вы используете PHP %s, но системе Zorca CMS для запуска требуется PHP %s.', $ver, $req));
 }
 
+// Определяем базовую папку сервера
+define('DS', '/');
+define('BASE', str_replace(DIRECTORY_SEPARATOR, DS, __DIR__ . DS));
+
 // Проверяем, установлены ли необходимые библиотеки
 $autoload = __DIR__ . '/vendor/autoload.php';
 if (!is_file($autoload)) {
@@ -13,4 +17,5 @@ if (!is_file($autoload)) {
 // Подгружаем библиотеки
 require_once $autoload;
 
+// Запускаем движок
 $zorca = new Zorca\Zorca();
