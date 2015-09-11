@@ -10,9 +10,13 @@ use Twig_Error;
 use ParsedownExtra;
 class Zorca {
     public function __construct() {
+        $extConfig = $this->loadConfig(BASE . 'ext/ext.json', []);
+        foreach ($extConfig as $extConfigItem) {
+            $extClass = BASE . 'ext' . DS . $extConfigItem['extName'] . DS . $extConfigItem['extName'] . '.php';
+            if (file_exists($extClass)) require_once($extClass);
+        }
         $request = Request::createFromGlobals();
         $routes = new Routing\RouteCollection();
-        $extConfig = $this->loadConfig(BASE . 'ext/ext.json', []);
         foreach ($extConfig as $extConfigItem) {
             $routes->add($extConfigItem['extName'], new Routing\Route($extConfigItem['extSlug']));
         }
