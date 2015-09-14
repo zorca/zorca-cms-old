@@ -1,2 +1,2 @@
-# zorca-cms
+# Zorca CMS
 Zorca - Modern Flat-File CMS
