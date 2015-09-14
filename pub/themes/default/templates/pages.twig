@@ -1,9 +1,4 @@
-<!doctype html>
-<html lang="ru">
-    <head>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        {{ pageContent|raw }}
-    </body>
-</html>
+{% extends skeleton %}
+{% block zContent %}
+    {{  pageContent|raw }}
+{% endblock %}
