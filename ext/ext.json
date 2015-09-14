@@ -1,10 +1,10 @@
 [
   {
-    "extName": "admin",
+    "extKey": "admin",
     "extSlug": "/administrator"
   },
   {
-    "extName": "pages",
+    "extKey": "pages",
     "extSlug": "/page"
   }
 ]
