@@ -28,7 +28,7 @@ class Zorca {
         } catch (Routing\Exception\ResourceNotFoundException $e) {
             $response = new Response('Страница не найдена', 404);
         } catch (\Exception $e) {
-            $response = new Response('Ошибка системы', 500);
+            $response = new Response('Ошибка системы ' . $e, 500);
         }
         $response->prepare($request);
         $response->send();
