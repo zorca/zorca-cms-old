@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% block zHead %}
+    {% endblock %}
+</head>
+<body class="z-body">
+    <header class="z-header">
+        <div class="z-row">
+            {% block zHeader %}
+            {% endblock %}
+        </div>
+    </header>
+    <div class="z-main">
+        <div class="z-row">
+            <div class="z-content">
+                {% block zContent %}
+                {% endblock %}
+            </div>
+            <div class="z-sidebar">
+                {% block zSidebar %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer class="z-footer">
+        <div class="z-row">
+            {% block zFooter %}
+            {% endblock %}
+        </div>
+    </footer>
+    {% block zFoot %}
+    {% endblock %}
+</body>
+</html>

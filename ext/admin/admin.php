@@ -1,8 +1,9 @@
 <?php
 namespace Zorca\Ext;
 
+use Symfony\Component\HttpFoundation\Response;
 class AdminExt {
     public function run($extAction) {
-        return 'Расширение Admin работает';
+        return new Response('Расширение Admin работает');
     }
 }
