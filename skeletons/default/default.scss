@@ -1,0 +1,39 @@
+/* Скелет Default */
+
+// Настройки скелета
+$z-container-width: 60rem!default;
+$z-footer-height: 4rem!default;
+
+// Прибитый вниз футер
+html, body {
+  height: 100%;
+}
+.z-wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
+.z-footer, {
+  margin-top: -$z-footer-height;
+  height: $z-footer-height;
+}
+
+// Сетка
+.z-container {
+  max-width: 60rem;
+  @include make-container();
+}
+
+.z-row {
+  @include make-row();
+}
+
+.z-content {
+  @include make-col();
+  @include make-col-span(8);
+}
+
+.z-sidebar {
+  @include make-col();
+  @include make-col-span(4);
+}
