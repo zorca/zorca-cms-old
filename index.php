@@ -1,4 +1,7 @@
 <?php
+/**
+ * @todo Сделать режимы запуска: development, production
+ */
 // Проверяем версию PHP
 if (version_compare($ver = PHP_VERSION, $req = '5.4.0', '<')) {
     throw new \RuntimeException(sprintf('Вы используете PHP %s, но системе Zorca CMS для запуска требуется PHP %s.', $ver, $req));

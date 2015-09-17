@@ -381,6 +381,8 @@ html {
   width: 33.33333%; }
 /* _01-base */
 /* Базовые стили сайта */
+h1, h2, h3, h4, h5 {
+  text-align: center; }
 /* Основной стиль шаблона */
 .c-menu {
   margin-bottom: 0;
@@ -389,5 +391,17 @@ html {
     display: inline-block;
     padding: 1rem 0.5rem; }
 
-.z-header, .z-footer, .z-sidebar {
-  outline: 1px solid #333; }
+.z-content, .z-sidebar, .z-footer {
+  padding: 1rem; }
+
+.z-footer {
+  font-weight: 700;
+  color: #fff;
+  background: #92afd7 none repeat scroll 0 0; }
+
+.z-footer-inner {
+  position: relative;
+  float: left;
+  min-height: 1px;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem; }

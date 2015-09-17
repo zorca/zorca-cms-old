@@ -1,6 +1,6 @@
 /* Основной стиль шаблона */
 
-.c-menu {
+.m-menu {
   margin-bottom: 0;
   padding-left: 0;
   &__item {
@@ -9,6 +9,14 @@
   }
 }
 
-.z-header, .z-footer, .z-sidebar {
-  outline: 1px solid #333;
+.z-content, .z-sidebar, .z-footer {padding: 1rem;}
+
+.z-footer {
+  font-weight: 700;
+  color: #ffffff;
+  background: $color2 none repeat scroll 0 0;
+}
+
+.z-footer-inner {
+  @include make-col();
 }
