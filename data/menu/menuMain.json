@@ -1,0 +1,10 @@
+[
+  {
+    "menuItem": "Главная",
+    "menuLink": "index"
+  },
+  {
+    "menuItem": "О нас",
+    "menuLink": "about"
+  }
+]

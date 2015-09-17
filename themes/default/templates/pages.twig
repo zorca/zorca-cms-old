@@ -2,6 +2,15 @@
 {% block zHead %}
     <link rel="stylesheet" href="/pub/styles/main.css">
 {% endblock %}
+{% block zHeader %}
+    {{  menuContent|raw }}
+{% endblock %}
 {% block zContent %}
     {{  pageContent|raw }}
+{% endblock %}
+{% block zSidebar %}
+    {{  sidebarContent|raw }}
+{% endblock %}
+{% block zFooter %}
+    {{  footerContent|raw }}
 {% endblock %}

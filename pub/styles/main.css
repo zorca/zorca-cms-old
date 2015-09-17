@@ -340,8 +340,11 @@ html, body {
   margin-top: -4rem;
   height: 4rem; }
 
+html {
+  min-width: 60rem; }
+
 .z-container {
-  max-width: 60rem;
+  width: 60rem;
   margin-right: auto;
   margin-left: auto;
   padding-left: 0.9375rem;
@@ -379,3 +382,12 @@ html, body {
 /* _01-base */
 /* Базовые стили сайта */
 /* Основной стиль шаблона */
+.c-menu {
+  margin-bottom: 0;
+  padding-left: 0; }
+  .c-menu__item {
+    display: inline-block;
+    padding: 1rem 0.5rem; }
+
+.z-header, .z-footer, .z-sidebar {
+  outline: 1px solid #333; }

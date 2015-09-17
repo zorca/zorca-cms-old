@@ -4,17 +4,23 @@ namespace Zorca\Ext;
 use Symfony\Component\HttpFoundation\Response;
 use ParsedownExtra;
 use Zorca\Theme;
-use Zorca\SCSS;
+use Zorca\Scss;
+use Zorca\Menu;
 class PagesExt {
     public function run($extAction) {
         $responseStatus = '200';
         $parsedown = new ParsedownExtra();
-        $pageContentFilePath = BASE . 'data/pages' . DS . $extAction . '.md';
+        $pageContentFilePath = BASE . 'data/ext/pages' . DS . $extAction . '.md';
         if (!file_exists($pageContentFilePath)) {
             $pageContentFilePath = BASE . 'data/pages/404.md';
             $responseStatus = '404';
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));
+        $menu = new Menu();
+        $menuContent = $menu->load('menuMain');
+        /** @todo Требуется переделать ввод через массив стилей, поданный в класс
+         *  @todo Также решить вопрос с import внутри стилей scss
+         **/
         $scss = new Scss();
         $scss->compileFile([
             BASE. 'palettes/default.scss',
@@ -32,7 +38,7 @@ class PagesExt {
             BASE. 'themes/default/styles/main.scss'],
             BASE. 'pub/styles/main.css');
         $theme = new Theme();
-        $renderedPage = $theme->render($pageContent);
+        $renderedPage = $theme->render($menuContent, $pageContent);
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }

@@ -19,8 +19,9 @@ html, body {
 }
 
 // Сетка
+html { min-width: $z-container-width; } // Фикс пропадания фона при уменьшении окна
 .z-container {
-  max-width: 60rem;
+  width: $z-container-width;
   @include make-container();
 }
 
