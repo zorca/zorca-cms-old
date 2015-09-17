@@ -8,7 +8,7 @@ class Scss {
         return $compiler->compile($scss);
     }
     public function compileFile($in, $out) {
-        $scss = '';
+        $scss = '@charset "utf-8";';
         foreach($in as $inItem) {
             if (file_exists($inItem)) $scss = $scss . PHP_EOL . file_get_contents($inItem);
         }

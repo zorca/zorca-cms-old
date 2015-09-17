@@ -12,6 +12,7 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
+  padding-bottom: $z-footer-height;
 }
 .z-footer, {
   margin-top: -$z-footer-height;
