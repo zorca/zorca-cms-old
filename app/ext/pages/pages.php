@@ -10,9 +10,9 @@ class PagesExt {
     public function run($extAction) {
         $responseStatus = '200';
         $parsedown = new ParsedownExtra();
-        $pageContentFilePath = BASE . 'data/ext/pages' . DS . $extAction . '.md';
+        $pageContentFilePath = BASE . 'app/data/ext/pages' . DS . $extAction . '.md';
         if (!file_exists($pageContentFilePath)) {
-            $pageContentFilePath = BASE . 'data/pages/404.md';
+            $pageContentFilePath = BASE . 'app/data/pages/404.md';
             $responseStatus = '404';
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));
@@ -23,8 +23,9 @@ class PagesExt {
          **/
         $scss = new Scss();
         $scss->compileFile([
-            BASE. 'palettes/default.scss',
-            BASE. 'themes/default/styles/_config.scss',
+            BASE. 'app/design/palettes/default.scss',
+            BASE. 'app/design/themes/default/styles/_config.scss',
+            BASE. 'app/oxi/_functions.scss',
             BASE. 'app/oxi/_variables.scss',
             BASE. 'app/oxi/_clearfix.scss',
             BASE. 'app/oxi/_hover.scss',
@@ -33,9 +34,9 @@ class PagesExt {
             BASE. 'app/oxi/_normalize.scss',
             BASE. 'app/oxi/_print.scss',
             BASE. 'app/oxi/_reboot.scss',
-            BASE. 'skeletons/default/default.scss',
-            BASE. 'themes/default/styles/_01-base.scss',
-            BASE. 'themes/default/styles/main.scss'],
+            BASE. 'app/design/skeletons/default/default.scss',
+            BASE. 'app/design/themes/default/styles/_01-base.scss',
+            BASE. 'app/design/themes/default/styles/main.scss'],
             BASE. 'pub/styles/main.css');
         $theme = new Theme();
         $renderedPage = $theme->render($menuContent, $pageContent);

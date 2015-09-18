@@ -13,6 +13,7 @@ class Scss {
             if (file_exists($inItem)) $scss = $scss . PHP_EOL . file_get_contents($inItem);
         }
         $css = $this->compile($scss);
+        mkdir(dirname($out), 0775, true);
         return file_put_contents($out, $css);
     }
 }

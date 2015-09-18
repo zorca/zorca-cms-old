@@ -1,10 +1,12 @@
 [
   {
     "extKey": "admin",
+    "extType": "component",
     "extSlug": "/administrator"
   },
   {
     "extKey": "pages",
-    "extSlug": "/page"
+    "extType": "component",
+    "extSlug": "/"
   }
 ]

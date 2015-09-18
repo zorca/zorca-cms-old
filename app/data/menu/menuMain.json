@@ -1,0 +1,22 @@
+[
+  {
+    "menuItem": "Главная",
+    "menuLink": "/"
+  },
+  {
+    "menuItem": "Установка",
+    "menuLink": "install"
+  },
+  {
+    "menuItem": "Расширения",
+    "menuLink": "extensions"
+  },
+  {
+    "menuItem": "Темы",
+    "menuLink": "themes"
+  },
+  {
+    "menuItem": "О проекте",
+    "menuLink": "about"
+  }
+]
