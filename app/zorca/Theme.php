@@ -5,7 +5,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use DebugBar\StandardDebugBar;
 class Theme {
-    public function render($menuContent, $pageContent) {
+    public function render($menuContent, $pageContent, $extKey) {
         $mainConfig = Config::load('app');
         if ($mainConfig['mode'] === 'development') {
             $debugbar = new StandardDebugBar();
@@ -21,7 +21,7 @@ class Theme {
         $twigTemplate = new Twig_Environment($templates);
         $twigSkeleton = new Twig_Environment($skeletons);
         $skeleton = $twigSkeleton->loadTemplate($mainConfig['skeleton'] . '.twig');
-        $renderedPage = $twigTemplate->render('pages.twig', ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'menuContent' => $menuContent, 'pageContent' => $pageContent, 'skeleton' => $skeleton]);
+        $renderedPage = $twigTemplate->render($extKey . '.twig', ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'menuContent' => $menuContent, 'pageContent' => $pageContent, 'skeleton' => $skeleton]);
         return $renderedPage;
     }
 }
