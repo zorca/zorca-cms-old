@@ -1,5 +1,6 @@
 {
   "offline": false,
+  "mode": "development",
   "skeleton": "default",
   "theme": "default"
 }

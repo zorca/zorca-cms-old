@@ -9,8 +9,13 @@ class Theme {
         $mainConfig = Config::load('app');
         $debugbar = new StandardDebugBar();
         $debugbarRenderer = $debugbar->getJavascriptRenderer();
-        $debugbarHead = $debugbarRenderer->renderHead();
-        $debugbarFoot = $debugbarRenderer->render();
+        if ($mainConfig['mode'] === 'development') {
+            $debugbarHead = $debugbarRenderer->renderHead();
+            $debugbarFoot = $debugbarRenderer->render();
+        } else {
+            $debugbarHead = '';
+            $debugbarFoot = '';
+        }
         $templates = new Twig_Loader_Filesystem(APP . 'design/themes' . DS . $mainConfig['theme'] . DS . 'templates/ext');
         $skeletons = new Twig_Loader_Filesystem(APP . 'design/skeletons/default');
         $twigTemplate = new Twig_Environment($templates);
