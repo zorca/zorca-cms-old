@@ -10,9 +10,9 @@ class PagesExt {
     public function run($extAction) {
         $responseStatus = '200';
         $parsedown = new ParsedownExtra();
-        $pageContentFilePath = BASE . 'app/data/ext/pages' . DS . $extAction . '.md';
+        $pageContentFilePath = BASE . 'app/data/ext/components/pages' . DS . $extAction . '.md';
         if (!file_exists($pageContentFilePath)) {
-            $pageContentFilePath = BASE . 'app/data/pages/404.md';
+            $pageContentFilePath = BASE . 'app/data/ext/components/pages/404.md';
             $responseStatus = '404';
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));

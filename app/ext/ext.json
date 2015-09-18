@@ -8,5 +8,9 @@
     "extKey": "pages",
     "extType": "component",
     "extSlug": "/"
+  },
+  {
+    "extKey": "menu",
+    "extType": "module"
   }
 ]

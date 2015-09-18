@@ -3,6 +3,7 @@
 <head>
     {% block zHead %}
     {% endblock %}
+    {{ debugbarHead|raw }}
 </head>
 <body class="z-body">
     <div class="z-wrap">
@@ -39,5 +40,6 @@
     </footer>
     {% block zFoot %}
     {% endblock %}
+    {{ debugbarFoot|raw }}
 </body>
 </html>

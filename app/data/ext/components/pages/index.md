@@ -7,4 +7,4 @@
 Вы можете получить Zorca CMS двумя способами:
 скачать последнюю стабильную версию по ссылке ниже или скачать версию для разработчиков из [репозитория на Гитхабе](https://github.com/zorca/zorca-cms/tree/develop).
 
-[Скачать](install){.button .button--center}
+[Скачать](https://github.com/zorca/zorca-cms/archive/develop.zip){.button .button--center}

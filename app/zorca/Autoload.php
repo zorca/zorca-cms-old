@@ -2,11 +2,11 @@
 namespace Zorca;
 
 class Autoload {
-    static function load($autoloadParam) {
-        $autoloadConfig = Config::load($autoloadParam);
+    static function load() {
+        $autoloadConfig = Config::load('ext');
         foreach ($autoloadConfig as $autoloadConfigItem) {
-            $autoloadConfigItemKey = $autoloadParam . 'Key';
-            $autoloadClassFile = APP . $autoloadParam . DS . $autoloadConfigItem[$autoloadConfigItemKey] . DS . $autoloadConfigItem[$autoloadConfigItemKey] . '.php';
+            $autoloadConfigItemKey = 'extKey';
+            $autoloadClassFile = APP . 'ext' . DS . $autoloadConfigItem['extType'] . 's' . DS . $autoloadConfigItem[$autoloadConfigItemKey] . DS . $autoloadConfigItem[$autoloadConfigItemKey] . '.php';
             if (file_exists($autoloadClassFile)) require_once($autoloadClassFile);
         }
     }
