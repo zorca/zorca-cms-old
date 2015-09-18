@@ -1,5 +1,5 @@
 <?php
-namespace Zorca;
+namespace Zorca\Ext;
 
 class Menu {
     public function load($menuName) {

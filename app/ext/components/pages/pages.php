@@ -5,7 +5,6 @@ use Symfony\Component\HttpFoundation\Response;
 use ParsedownExtra;
 use Zorca\Theme;
 use Zorca\Scss;
-use Zorca\Menu;
 class PagesExt {
     public function run($extRequest, $extAction) {
         $responseStatus = '200';
