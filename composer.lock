@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1eea760b06b808a95299a09956c2aff4",
+    "hash": "711abcc46a164b09c8dc71a4838ac89f",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -147,16 +147,16 @@
         },
         {
             "name": "maximebf/debugbar",
-            "version": "v1.10.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "7b2006e6e095126b5a061ec33fca3d90ea8a8219"
+                "reference": "ab12b6f57dd33b1fffa875046fd17c34d88388b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/7b2006e6e095126b5a061ec33fca3d90ea8a8219",
-                "reference": "7b2006e6e095126b5a061ec33fca3d90ea8a8219",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/ab12b6f57dd33b1fffa875046fd17c34d88388b9",
+                "reference": "ab12b6f57dd33b1fffa875046fd17c34d88388b9",
                 "shasum": ""
             },
             "require": {
@@ -199,7 +199,7 @@
             "keywords": [
                 "debug"
             ],
-            "time": "2015-02-05 07:51:20"
+            "time": "2015-07-09 18:15:09"
         },
         {
             "name": "psr/log",
@@ -487,7 +487,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "maximebf/debugbar": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
