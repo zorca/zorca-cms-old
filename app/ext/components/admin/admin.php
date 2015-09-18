@@ -10,14 +10,17 @@ class AdminExt {
     public function run($extRequest, $extAction) {
         session_start();
         $auth = new Auth();
-        if ($auth->isAuth()) {
-            echo 'Авторизован';
+        if ($auth->is()) {
+            echo 'Здравствуйте';
+            echo '<br/><br/><a href="">Выйти</a>';
         }
         $responseStatus = '200';
         if ($extRequest->request->get('login')) {
             $login = $extRequest->request->get('login');
             $password = $extRequest->request->get('password');
-            Auth::check($login, $password);
+            Auth::in($login, $password);
+        } else {
+            Auth::out();
         }
         $menu = new Menu();
         $menuContent = $menu->load('menuMain');
