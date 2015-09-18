@@ -11,6 +11,7 @@ if (version_compare($ver = PHP_VERSION, $req = '5.4.0', '<')) {
 define('DS', '/');
 define('BASE', str_replace(DIRECTORY_SEPARATOR, DS, __DIR__ . DS));
 define('APP', BASE . 'app' . DS);
+define('DATA', BASE . 'data' . DS);
 define('PUB', BASE . 'pub' . DS);
 
 // Проверяем, установлены ли необходимые библиотеки

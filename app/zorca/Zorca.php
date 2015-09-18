@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
 class Zorca {
     public function __construct() {
-        Autoload::load('ext');
+        Autoload::load();
         $routes = Routes::load();
         $request = Request::createFromGlobals();
         $context = new Routing\RequestContext();

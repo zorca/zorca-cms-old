@@ -6,7 +6,7 @@ class Menu {
         $beforeMenu ='';
         $loadMenu = '';
         $afterMenu = '';
-        $menuFilePath = APP . 'data/ext/modules/menu' . DS . $menuName . '.json';
+        $menuFilePath = DATA . 'ext/modules/menu' . DS . $menuName . '.json';
         // Если файл конфига не существует, то отдаем пустой массив
         if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
         foreach($menu as $menuItem) {
