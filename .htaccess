@@ -44,9 +44,9 @@ RewriteRule .* index.php [L]
 
 ## Begin - Security
 # Block all direct access for these folders
-RewriteRule ^(app|vendor)/(.*) error [L]
+RewriteRule ^(app)/(.*) error [L]
 # Block access to specific file types for these folders
-RewriteRule ^(data)/(.*)\.(json|scss|txt|md|html|yaml|php|twig|sh|bat)$ error [L]
+RewriteRule ^(data|vendor)/(.*)\.(json|scss|txt|md|html|yaml|php|twig|sh|bat)$ error [L]
 ## End - Security
 
 </IfModule>
