@@ -28,17 +28,17 @@ class AdminExt {
             BASE. 'app/design/themes/default/styles/main.scss'],
             BASE. 'pub/styles/main.css');
         $theme = new Theme();
-        $pageContentFile = APP . 'ext/components/admin/views' . DS . 'admin.php';
+        $pageContentFile = APP . 'ext/components/admin/views' . DS . 'index.php';
         if (file_exists($pageContentFile)) $pageContent = file_get_contents($pageContentFile); else $pageContent = '';
         $renderedPage = $theme->render($menuContent, $pageContent, 'admin');
         $response = new Response($renderedPage, $responseStatus);
-        if ($extAction === 'login') $this->login();
+        if ($extAction === 'login') $this->login($extRequest);
         return $response;
     }
-    private function login() {
-
+    private function login($extRequest) {
+        var_dump($extRequest->request->get('login'));
     }
-    private function logout() {
+    private function logout($extRequest) {
 
     }
 }
