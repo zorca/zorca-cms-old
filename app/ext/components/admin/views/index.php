@@ -1,4 +1,4 @@
-<form  method="POST" action="administrator/login">
+<form  method="POST" action="">
     <input type="hidden" name="token" value="SecurityToken">
     <label>Вход в панель администратора</label>
     <input type="text" name="login" id="login" placeholder="Ваш логин">

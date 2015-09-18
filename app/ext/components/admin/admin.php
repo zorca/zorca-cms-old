@@ -5,9 +5,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Zorca\Theme;
 use Zorca\Scss;
 use Zorca\Menu;
+use Zorca\Auth;
 class AdminExt {
     public function run($extRequest, $extAction) {
+        session_start();
+        $auth = new Auth();
+        if ($auth->isAuth()) {
+            echo 'Авторизован';
+        }
         $responseStatus = '200';
+        if ($extRequest->request->get('login')) {
+            $login = $extRequest->request->get('login');
+            $password = $extRequest->request->get('password');
+            Auth::check($login, $password);
+        }
         $menu = new Menu();
         $menuContent = $menu->load('menuMain');
         $scss = new Scss();
@@ -32,13 +43,6 @@ class AdminExt {
         if (file_exists($pageContentFile)) $pageContent = file_get_contents($pageContentFile); else $pageContent = '';
         $renderedPage = $theme->render($menuContent, $pageContent, 'admin');
         $response = new Response($renderedPage, $responseStatus);
-        if ($extAction === 'login') $this->login($extRequest);
         return $response;
-    }
-    private function login($extRequest) {
-        var_dump($extRequest->request->get('login'));
-    }
-    private function logout($extRequest) {
-
     }
 }
