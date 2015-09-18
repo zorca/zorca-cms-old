@@ -4,7 +4,6 @@ namespace Zorca\Ext;
 use Symfony\Component\HttpFoundation\Response;
 use Zorca\Theme;
 use Zorca\Scss;
-use Zorca\Menu;
 use Zorca\Auth;
 class AdminExt {
     public function run($extRequest, $extAction) {
