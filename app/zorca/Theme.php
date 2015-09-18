@@ -7,9 +7,9 @@ use DebugBar\StandardDebugBar;
 class Theme {
     public function render($menuContent, $pageContent) {
         $mainConfig = Config::load('app');
-        $debugbar = new StandardDebugBar();
-        $debugbarRenderer = $debugbar->getJavascriptRenderer();
         if ($mainConfig['mode'] === 'development') {
+            $debugbar = new StandardDebugBar();
+            $debugbarRenderer = $debugbar->getJavascriptRenderer();
             $debugbarHead = $debugbarRenderer->renderHead();
             $debugbarFoot = $debugbarRenderer->render();
         } else {
