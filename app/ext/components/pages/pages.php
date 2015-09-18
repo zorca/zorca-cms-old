@@ -39,7 +39,7 @@ class PagesExt {
             BASE. 'app/design/themes/default/styles/main.scss'],
             BASE. 'pub/styles/main.css');
         $theme = new Theme();
-        $renderedPage = $theme->render($menuContent, $pageContent);
+        $renderedPage = $theme->render($menuContent, $pageContent, 'pages');
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }

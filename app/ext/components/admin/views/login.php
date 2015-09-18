@@ -1,12 +1,7 @@
-<form  method="POST" action="">
-    <input type="hidden" name="token" value="Token">
-    <div class="row">
-        <div class="box-3 col"></div>
-        <div class="box-3 col">
-            <label>Login</label>
-            <input class="pull-left" type="password" name="password" id="password" placeholder="Password">
-            <input class="pull-left" type="submit" class="btn" value="Login">
-        </div>
-        <div class="box-3 col"></div>
-    </div>
+<form  id="login" method="POST" action="?action=login">
+    <input type="hidden" name="token" value="SecurityToken">
+    <label>Вход в панель администратора</label>
+    <input type="text" name="login" id="login" placeholder="Ваш логин">
+    <input type="password" name="password" id="password" placeholder="Ваш пароль">
+    <input type="submit" class="button button--center" value="Войти">
 </form>
