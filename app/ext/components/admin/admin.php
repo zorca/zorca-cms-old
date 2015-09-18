@@ -6,7 +6,7 @@ use Zorca\Theme;
 use Zorca\Scss;
 use Zorca\Menu;
 class AdminExt {
-    public function run($extAction) {
+    public function run($extRequest, $extAction) {
         $responseStatus = '200';
         $menu = new Menu();
         $menuContent = $menu->load('menuMain');
@@ -28,7 +28,7 @@ class AdminExt {
             BASE. 'app/design/themes/default/styles/main.scss'],
             BASE. 'pub/styles/main.css');
         $theme = new Theme();
-        $pageContentFile = APP . 'ext/components/admin/views' . DS . $extAction . '.php';
+        $pageContentFile = APP . 'ext/components/admin/views' . DS . 'admin.php';
         if (file_exists($pageContentFile)) $pageContent = file_get_contents($pageContentFile); else $pageContent = '';
         $renderedPage = $theme->render($menuContent, $pageContent, 'admin');
         $response = new Response($renderedPage, $responseStatus);
@@ -36,6 +36,9 @@ class AdminExt {
         return $response;
     }
     private function login() {
+
+    }
+    private function logout() {
 
     }
 }

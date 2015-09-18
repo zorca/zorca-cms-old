@@ -7,7 +7,7 @@ use Zorca\Theme;
 use Zorca\Scss;
 use Zorca\Menu;
 class PagesExt {
-    public function run($extAction) {
+    public function run($extRequest, $extAction) {
         $responseStatus = '200';
         $parsedown = new ParsedownExtra();
         $pageContentFilePath = DATA . 'ext/components/pages' . DS . $extAction . '.md';

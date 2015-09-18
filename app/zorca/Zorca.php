@@ -16,7 +16,7 @@ class Zorca {
             $matchResult = $matcher->match($request->getPathInfo());
             $extClass = 'Zorca\Ext\\' . ucfirst($matchResult['_route']) . 'Ext';
             $extController = new $extClass;
-            $response = $extController->run($matchResult['extAction']);
+            $response = $extController->run($request, $matchResult['extAction']);
         } catch (Routing\Exception\ResourceNotFoundException $e) {
             $response = new Response('Расширение не найдено', 404);
         } catch (\Exception $e) {
