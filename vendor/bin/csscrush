@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+SRC_DIR="`pwd`"
+cd "`dirname "$0"`"
+cd "../css-crush/css-crush/bin"
+BIN_TARGET="`pwd`/csscrush"
+cd "$SRC_DIR"
+"$BIN_TARGET" "$@"

@@ -1,0 +1,8 @@
+--TEST--
+"Р’В§" custom function
+--TEMPLATE--
+{{ Р’В§('foo') }}
+--DATA--
+return array()
+--EXPECT--
+Р’В§fooР’В§

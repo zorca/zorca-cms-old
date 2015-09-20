@@ -1,0 +1,10 @@
+--TEST--
+"Р’В§" special chars in a block name
+--TEMPLATE--
+{% block Р’В§ %}
+Р’В§
+{% endblock Р’В§ %}
+--DATA--
+return array()
+--EXPECT--
+Р’В§

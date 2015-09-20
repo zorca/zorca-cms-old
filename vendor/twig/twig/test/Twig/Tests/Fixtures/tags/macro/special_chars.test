@@ -1,0 +1,14 @@
+--TEST--
+"Р’В§" as a macro name
+--TEMPLATE--
+{% import _self as macros %}
+
+{{ macros.Р’В§('foo') }}
+
+{% macro Р’В§(foo) %}
+  Р’В§{{ foo }}Р’В§
+{% endmacro %}
+--DATA--
+return array()
+--EXPECT--
+Р’В§fooР’В§
