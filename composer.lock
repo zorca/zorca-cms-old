@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cecdb773c6b34476175c3b23155cce5b",
+    "hash": "ae39940baf2f7ab5f8d6fc8c8c61f70b",
     "packages": [
         {
             "name": "css-crush/css-crush",
