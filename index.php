@@ -4,8 +4,17 @@
  */
 // Проверяем версию PHP
 if (version_compare($ver = PHP_VERSION, $req = '5.4.0', '<')) {
-    throw new \RuntimeException(sprintf('Вы используете PHP %s, но системе Zorca CMS для запуска требуется PHP %s.', $ver, $req));
+    throw new \RuntimeException(sprintf('You are running PHP %s, but Zorca needs at least <strong>PHP %s</strong> to run.', $ver, $req));
 }
+
+// Устанавливаем временную зону по-умолчанию, на случай, если она не установлена в php.ini
+date_default_timezone_set(@date_default_timezone_get());
+
+// Проверяем установлено ли расширение mbstring
+if (!extension_loaded('mbstring')) {
+    throw new \RuntimeException("'mbstring' extension is not loaded.  This is required for Zorca to run correctly");
+}
+mb_internal_encoding('UTF-8');
 
 // Определяем базовую папку сервера
 define('DS', '/');
@@ -17,7 +26,7 @@ define('PUB', BASE . 'pub' . DS);
 // Проверяем, установлены ли необходимые библиотеки
 $autoload = __DIR__ . '/vendor/autoload.php';
 if (!is_file($autoload)) {
-    throw new \RuntimeException('Не установлены внешние библиотеки. Запустите команду composer install');
+    throw new \RuntimeException('Please run: <i>composer install</i>');
 }
 
 // Подгружаем библиотеки
