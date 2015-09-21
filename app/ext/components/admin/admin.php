@@ -7,6 +7,9 @@ use Zorca\Config;
 use Zorca\Theme;
 use Zorca\Scss;
 use Zorca\Auth;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+use DebugBar\StandardDebugBar;
 /**
  * Class AdminExt
  * @package Zorca\Ext
@@ -31,8 +34,7 @@ class AdminExt {
         if ($extAction === 'logout') { Auth::out(); return new RedirectResponse('/'); }
         $scss = new Scss();
         $scss->compileFile([
-            BASE. 'app/design/palettes/default.scss',
-            BASE. 'app/design/themes/default/styles/_config.scss',
+            BASE. 'app/ext/components/admin/theme/styles/_config.scss',
             BASE. 'app/core/oxi/_functions.scss',
             BASE. 'app/core/oxi/_variables.scss',
             BASE. 'app/core/oxi/_clearfix.scss',
@@ -43,20 +45,15 @@ class AdminExt {
             BASE. 'app/core/oxi/_print.scss',
             BASE. 'app/core/oxi/_reboot.scss',
             BASE. 'app/design/skeletons/default/default.scss',
-            BASE. 'app/design/themes/default/styles/_01-base.scss',
-            BASE. 'app/design/themes/default/styles/main.scss'],
-            BASE. 'pub/styles/main.css');
-        $theme = new Theme();
+            BASE. 'app/ext/components/admin/theme/styles/main.scss'],
+            BASE. 'pub/styles/admin.css');
         $menuContent = '';
-        $pageContent = '';
+        $adminContent = '';
         if (Auth::is()) {
             $menuContent = $this->menu();
-            $pageContent = '';
-        } elseif ($extAction === 'index') {
-            $pageContentFile = APP . 'ext/components/admin/views' . DS . 'index.php';
-            if (file_exists($pageContentFile)) $pageContent = file_get_contents($pageContentFile); else $pageContent = '';
+            $adminContent = '';
         }
-        $renderedPage = $theme->render($menuContent, $pageContent, 'admin');
+        $renderedPage = $this->theme($menuContent, $adminContent, $extAction);
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }
@@ -73,7 +70,7 @@ class AdminExt {
         $beforeMenu = '<ul class="m-menu">';
         $loadMenu = '';
         $afterMenu = '<li class="m-menu__item"><a class="m-menu__link" href="' . $adminSlug . DS . 'logout' . '">' . 'Выйти' . '</a></li></ul>';
-        $menuFilePath = APP . 'ext/components/admin/menu' . DS . 'menu.json';
+        $menuFilePath = APP . 'ext/components/admin/menu/menu.json';
         // Если файл конфига не существует, то отдаем пустой массив
         if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
         foreach($menu as $menuItem) {
@@ -81,5 +78,29 @@ class AdminExt {
         }
         $loadMenu = $beforeMenu . $loadMenu . $afterMenu;
         return $loadMenu;
+    }
+
+    /**
+     *
+     */
+    private function theme($menuContent, $adminContent, $extAction) {
+        $mainConfig = Config::load('app');
+        if ($mainConfig['mode'] === 'development') {
+            $debugbar = new StandardDebugBar();
+            $debugbarRenderer = $debugbar->getJavascriptRenderer();
+            $debugbarHead = $debugbarRenderer->renderHead();
+            $debugbarFoot = $debugbarRenderer->render();
+        } else {
+            $debugbarHead = '';
+            $debugbarFoot = '';
+        }
+        $templates = new Twig_Loader_Filesystem(APP . 'ext/components/admin/pages');
+        $skeletons = new Twig_Loader_Filesystem(APP . 'ext/components/admin/skeletons/default');
+        $twigTemplate = new Twig_Environment($templates);
+        $twigSkeleton = new Twig_Environment($skeletons);
+        $skeleton = $twigSkeleton->loadTemplate('default.twig');
+        if (!$extAction) $extAction = 'index';
+        $renderedPage = $twigTemplate->render($extAction . '.twig', ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'menuContent' => $menuContent, 'adminContent' => $adminContent, 'skeleton' => $skeleton]);
+        return $renderedPage;
     }
 }

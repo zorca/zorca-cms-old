@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% block zHead %}
+    {% endblock %}
+    {{ debugbarHead|raw }}
+</head>
+<body class="z-body">
+    <div class="z-wrap">
+        {% if block('zHeader') %}
+            <header class="z-header">
+                <div class="z-container">
+                    <div class="z-row">
+                        {% block zHeader %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </header>
+        {% endif %}
+        <div class="z-main">
+            <div class="z-container">
+                <div class="z-row">
+                    {% set zContent,zSidebar = block('zContent'), block('zSidebar') %}
+                    {% if block('zSidebar') %}
+                        <div class="z-content">
+                            {{ zContent|raw }}
+                        </div>
+                        <div class="z-sidebar">
+                            {{ zSidebar|raw }}
+                        </div>
+                    {% else %}
+                        <div class="z-content--full">
+                            {{ zContent|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="z-footer">
+        <div class="z-container">
+            <div class="z-row">
+                {% block zFooter %}
+                {% endblock %}
+            </div>
+        </div>
+    </footer>
+    {% block zFoot %}
+    {% endblock %}
+    {{ debugbarFoot|raw }}
+</body>
+</html>
