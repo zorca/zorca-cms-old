@@ -1,0 +1,14 @@
+[
+  {
+    "menuItem": "Расширения",
+    "menuLink": "extensions"
+  },
+  {
+    "menuItem": "Темы",
+    "menuLink": "themes"
+  },
+  {
+    "menuItem": "Настройки",
+    "menuLink": "settings"
+  }
+]

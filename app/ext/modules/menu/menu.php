@@ -1,7 +1,15 @@
 <?php
 namespace Zorca\Ext;
 
+/**
+ * Class Menu
+ * @package Zorca\Ext
+ */
 class Menu {
+    /**
+     * @param $menuName
+     * @return string
+     */
     public function load($menuName) {
         $beforeMenu ='';
         $loadMenu = '';

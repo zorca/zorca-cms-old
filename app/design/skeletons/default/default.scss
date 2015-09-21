@@ -33,6 +33,9 @@ html { min-width: $z-container-width; } // Фикс пропадания фон�
 .z-content {
   @include make-col();
   @include make-col-span(8);
+  &--full {
+    @include make-col-span(12);
+  }
 }
 
 .z-sidebar {
