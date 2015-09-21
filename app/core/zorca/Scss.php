@@ -13,7 +13,6 @@ class Scss {
             if (file_exists($inItem)) $scss = $scss . PHP_EOL . file_get_contents($inItem);
         }
         $css = $this->compile($scss);
-        $css = csscrush_string($css, ['formatter' => 'block']);
         if (!file_exists($out)) mkdir(dirname($out), 0775, true);
         return file_put_contents($out, $css);
     }
