@@ -17,15 +17,9 @@ class PagesExt {
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));
         $menu = new Menu();
         $menuContent = $menu->load('menuMain');
-        /**
-         *  @todo Требуется переделать ввод через массив стилей, поданный в класс
-         *  @todo Также решить вопрос с import внутри стилей scss
-         **/
         $scss = new Scss();
-        $scss->setImportPaths([BASE . 'app/design/themes/default/styles', BASE . 'app/core/oxi']);
-        $scss->compileFile([
-            BASE. 'app/design/themes/default/styles/main.scss'],
-            BASE. 'pub/styles/main.css');
+        $scss->setImportPaths([BASE . 'app/design/themes/default/styles', BASE . 'app/core/oxi', BASE . 'app/design/skeletons']);
+        $scss->compileFile([BASE. 'app/design/themes/default/styles/main.scss'], BASE. 'pub/styles/main.css');
         $theme = new Theme();
         $renderedPage = $theme->render($menuContent, $pageContent, 'pages');
         $response = new Response($renderedPage, $responseStatus);
