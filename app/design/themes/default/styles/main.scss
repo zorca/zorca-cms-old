@@ -1,82 +1,9 @@
+@import 'bootstrap/variables';
+@import 'bootstrap/clearfix';
+@import 'bootstrap/functions';
+
 /* Основной стиль шаблона */
 
-.z-content, .z-sidebar, .z-footer {padding: 1rem;}
+.z-content, .z-sidebar, .z-footer {padding: 1rem; @include clearfix; font-size: rem-calc(12); }
 
-.z-header { background: lighten($color4, 30%) none repeat scroll 0 0; }
-
-.z-sidebar {
-  height: 100%;
-  background: lighten($color4, 50%) none repeat scroll 0 0;
-}
-
-.z-footer {
-  font-weight: 700;
-  color: #ffffff;
-  background: $color4 none repeat scroll 0 0;
-}
-
-.m-menu {
-  margin-bottom: 0;
-  padding-left: 0;
-  font-size: 1.25rem;
-  font-weight: 700;
-  &__item {
-    display: inline-block;
-    padding: 1rem 0.5rem;
-  }
-  &__link {
-    text-decoration: none;
-    &:hover, &:focus {
-      text-decoration: none;
-    }
-  }
-}
-
-.m-footer {
-  &__left {
-    @include make-col();
-    @include make-col-span(6);
-    text-align: left;
-  }
-  &__right {
-    @include make-col();
-    @include make-col-span(6);
-    text-align: right;
-  }
-}
-
-.button {
-  font-weight: bold;
-  text-transform: uppercase;
-  background: $color3 none repeat scroll 0 0;
-  border: medium none;
-  border-radius: 0.25rem;
-  padding: 0.75em 1.5em;
-  &--center {
-    width: 40%;
-    text-align: center;
-    display: block;
-    margin: 0 30%;
-  }
-  &--login {
-    width: 10rem;
-  }
-}
-
-.c-admin-form {
-  padding-top: 10rem;
-  margin: 0 auto;
-  max-width: 30rem;
-  width: 100%;
-  text-align: center;
-  &__input {
-    font-size: 1.25rem;
-    text-align: center;
-    width: 20rem;
-    color: #b2b2b2;
-    border-radius: 0.25rem;
-    border: 2px solid #b2b2b2;
-    padding: 0.5rem 1.5rem;
-    margin-bottom: 1rem;
-  }
-}
+.z-header { background: lighten(#333, 30%) none repeat scroll 0 0; }
