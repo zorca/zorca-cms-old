@@ -23,45 +23,40 @@ class AdminExt {
     public function run($extRequest, $extAction) {
 
         session_start();
+        $formToken = Auth::formToken();
+        $_SESSION['_token'] = $formToken;
         $responseStatus = '200';
         if ($extRequest->request->get('token')) {
             $login = $extRequest->request->get('login');
             $password = $extRequest->request->get('password');
-            Auth::in($login, $password);
-        } else {
-
+            Auth::in($login, $password, $formToken);
         }
         if ($extAction === 'logout') { Auth::out(); return new RedirectResponse('/'); }
         $scss = new Scss();
-        $scss->compileFile([
-            BASE. 'app/ext/components/admin/theme/styles/_config.scss',
-            BASE. 'app/core/oxi/_functions.scss',
-            BASE. 'app/core/oxi/_variables.scss',
-            BASE. 'app/core/oxi/_clearfix.scss',
-            BASE. 'app/core/oxi/_hover.scss',
-            BASE. 'app/core/oxi/_tab-focus.scss',
-            BASE. 'app/core/oxi/_grid.scss',
-            BASE. 'app/core/oxi/_normalize.scss',
-            BASE. 'app/core/oxi/_print.scss',
-            BASE. 'app/core/oxi/_reboot.scss',
-            BASE. 'app/design/skeletons/default/default.scss',
-            BASE. 'app/ext/components/admin/theme/styles/main.scss'],
-            BASE. 'pub/styles/admin.css');
+        $scss->setImportPaths([ BASE . 'app/core/oxi',
+                                BASE . 'app/design/skeletons',
+                                BASE . 'app/ext/components/admin/themes/default/styles']);
+        $scss->compileFile([    BASE. 'app/design/themes/default/styles/main.scss'],
+                                BASE. 'pub/styles/admin.css');
         $menuContent = '';
         $adminContent = '';
         if (Auth::is()) {
-            $menuContent = $this->menu();
+            $menuContent = $this->menu('menuMain');
             $adminContent = '';
+        } else {
+            $extAction = 'login';
         }
-        $renderedPage = $this->theme($menuContent, $adminContent, $extAction);
+        $renderedPage = $this->theme($menuContent, $adminContent, $extAction, $formToken);
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }
 
     /**
+     * Меню панели администратора
+     *
      * @return string
      */
-    private function menu() {
+    private function menu($menuName) {
         $config = Config::load('ext');
         $adminSlug = '/admin';
         foreach ($config as $configItem) {
@@ -70,7 +65,7 @@ class AdminExt {
         $beforeMenu = '<ul class="m-menu">';
         $loadMenu = '';
         $afterMenu = '<li class="m-menu__item"><a class="m-menu__link" href="' . $adminSlug . DS . 'logout' . '">' . 'Выйти' . '</a></li></ul>';
-        $menuFilePath = APP . 'ext/components/admin/menu/menu.json';
+        $menuFilePath = APP . 'ext/components/admin/menu/' . $menuName . '.json';
         // Если файл конфига не существует, то отдаем пустой массив
         if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
         foreach($menu as $menuItem) {
@@ -81,9 +76,15 @@ class AdminExt {
     }
 
     /**
+     * Тема административной панели
      *
+     * @param $menuContent
+     * @param $adminContent
+     * @param $extAction
+     *
+     * @return string
      */
-    private function theme($menuContent, $adminContent, $extAction) {
+    private function theme($menuContent, $adminContent, $extAction, $formToken) {
         $mainConfig = Config::load('app');
         if ($mainConfig['mode'] === 'development') {
             $debugbar = new StandardDebugBar();
@@ -100,7 +101,15 @@ class AdminExt {
         $twigSkeleton = new Twig_Environment($skeletons);
         $skeleton = $twigSkeleton->loadTemplate('default.twig');
         if (!$extAction) $extAction = 'index';
-        $renderedPage = $twigTemplate->render($extAction . '.twig', ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'menuContent' => $menuContent, 'adminContent' => $adminContent, 'skeleton' => $skeleton]);
+
+        $renderedPage = $twigTemplate->render($extAction . '.twig',
+                [   'debugbarHead' => $debugbarHead,
+                    'debugbarFoot' => $debugbarFoot,
+                    'menuContent' => $menuContent,
+                    'adminContent' => $adminContent,
+                    'skeleton' => $skeleton,
+                    'formToken' => $formToken
+                ]);
         return $renderedPage;
     }
 }

@@ -10,6 +10,15 @@ use Zorca\Config;
  */
 class Auth {
     /**
+     * Генерация секретного токена для формы
+     *
+     * @return string
+     */
+    static function formToken() {
+        $token = md5(uniqid(microtime(), true));
+        return $token;
+    }
+    /**
      * Проверка, авторизован ли администратор
      *
      * @return bool
@@ -28,9 +37,9 @@ class Auth {
      * @param $password
      * @return bool
      */
-    static function in($login, $password) {
+    static function in($login, $password, $formToken) {
         $cred = Config::load('admin');
-        if ($login === $cred['login'] && password_verify($password, $cred['password'])) {
+        if ($login === $cred['login'] && password_verify($password, $cred['password']) && $_SESSION['_token'] === $formToken) {
             $_SESSION["is_auth"] = true;
             $_SESSION["login"] = $login;
             return true;

@@ -4,6 +4,12 @@ namespace Zorca;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
+
+/**
+ * Class Zorca
+ *
+ * @package Zorca
+ */
 class Zorca {
     public function __construct() {
         Autoload::load();
@@ -18,9 +24,9 @@ class Zorca {
             $extController = new $extClass;
             $response = $extController->run($request, $matchResult['extAction']);
         } catch (Routing\Exception\ResourceNotFoundException $e) {
-            $response = new Response('Расширение не найдено', 404);
+            $response = new Response('Расширение не найдено ' . $e, 404);
         } catch (\Exception $e) {
-            $response = new Response('Ошибка системы ' . $e, 500);
+            $response = new Response('Ошибка системы ' . $e->getMessage(), 500);
         }
         $response->prepare($request);
         $response->send();

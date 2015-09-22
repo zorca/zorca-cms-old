@@ -2,6 +2,9 @@
 <html lang="ru">
 <head>
     {% block zHead %}
+        <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/pub/styles/main.css">
     {% endblock %}
     {{ debugbarHead|raw }}
 </head>
@@ -12,6 +15,7 @@
                 <div class="z-container">
                     <div class="z-row">
                         {% block zHeader %}
+                            {{  menuContent|raw }}
                         {% endblock %}
                     </div>
                 </div>

@@ -5,13 +5,25 @@ use Symfony\Component\HttpFoundation\Response;
 use ParsedownExtra;
 use Zorca\Theme;
 use Zorca\Scss;
+
+/**
+ * Class PagesExt
+ *
+ * @package Zorca\Ext
+ */
 class PagesExt {
+    /**
+     * @param $extRequest
+     * @param $extAction
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function run($extRequest, $extAction) {
         $responseStatus = '200';
         $parsedown = new ParsedownExtra();
         $pageContentFilePath = DATA . 'ext/components/pages' . DS . $extAction . '.md';
         if (!file_exists($pageContentFilePath)) {
-            $pageContentFilePath = DATA . 'ext/components/pages/404.md';
+            $pageContentFilePath = APP . 'ext/components/pages/errorpages/404.md';
             $responseStatus = '404';
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));

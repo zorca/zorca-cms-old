@@ -16,6 +16,10 @@
     "menuLink": "themes"
   },
   {
+    "menuItem": "Безопасность",
+    "menuLink": "security"
+  },
+  {
     "menuItem": "О проекте",
     "menuLink": "about"
   }

@@ -4,7 +4,20 @@ namespace Zorca;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use DebugBar\StandardDebugBar;
+
+/**
+ * Class Theme
+ *
+ * @package Zorca
+ */
 class Theme {
+    /**
+     * @param $menuContent
+     * @param $pageContent
+     * @param $extKey
+     *
+     * @return string
+     */
     public function render($menuContent, $pageContent, $extKey) {
         $mainConfig = Config::load('app');
         if ($mainConfig['mode'] === 'development') {
