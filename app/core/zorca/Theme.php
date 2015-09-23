@@ -19,14 +19,6 @@ class Theme {
      * @return string
      */
     static function render($content, $service, $extKey) {
-        $config = Config::load('ext');
-        $extType = 'component';
-        foreach ($config as $configItem) {
-            if ($configItem['extKey'] === $extKey) {
-                $extType = $configItem['extType'];
-            }
-
-        }
         $mainConfig = Config::load('app');
         $debugbarHead = '';
         $debugbarFoot = '';
@@ -37,7 +29,6 @@ class Theme {
             $debugbarFoot = $debugbarRenderer->render();
 
         }
-
         if ($extKey === 'admin') {
             $adminDesignPath = APP . 'ext/components/admin' . DS . 'design';
             $templates = new Twig_Loader_Filesystem($adminDesignPath . DS . 'themes' . DS .  $mainConfig['themeAdmin'] . DS . 'templates');
@@ -54,7 +45,12 @@ class Theme {
             $skeleton = $twigSkeleton->loadTemplate($mainConfig['skeleton'] . '.twig');
         }
         $content = array_merge($content, ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'skeleton' => $skeleton]);
-        $renderedPage = $twigTemplate->render($extKey . '.twig', $content);
+        if ($extKey === 'admin') {
+            if ($service['extAction'] === 'login') $content = array_merge($content, ['formToken' => $service['formToken']]);
+            $renderedPage = $twigTemplate->render($service['extAction'] . '.twig', $content);
+        } else {
+            $renderedPage = $twigTemplate->render($extKey . '.twig', $content);
+        }
         return $renderedPage;
     }
 }

@@ -1,0 +1,15 @@
+{% extends skeleton %}
+{% block zAll %}
+    <header class="z-header">
+        <div class="z-logo">
+            <div class="m-logo">Zorca CMS</div>
+        </div>
+        <div class="z-topmenu">{{  menuMainContent|raw }}</div>
+    </header>
+    <div class="z-main">
+        <div class="z-sidebar">{{  menuSidebarContent|raw }}</div>
+        <div class="z-content">{{  menuAdminContent|raw }}</div>
+    </div>
+    <footer class="z-footer">
+    </footer>
+{% endblock %}

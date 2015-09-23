@@ -6,8 +6,7 @@
   },
   {
     "extKey": "pages",
-    "extType": "component",
-    "extSlug": "/"
+    "extType": "component"
   },
   {
     "extKey": "menu",

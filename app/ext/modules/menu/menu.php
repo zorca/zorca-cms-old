@@ -18,25 +18,24 @@ class MenuMod {
      */
     static function load($extKey, $menuName, $mod) {
         $config = Config::load('ext');
-        $extType = 'component';
-        $extSlug = '/';
-
         foreach ($config as $configItem) {
             if ($configItem['extKey'] === $extKey) {
                 $extType = $configItem['extType'];
                 $extSlug = $configItem['extSlug'];
             }
-
         }
+        if (!isset($extType)) $extType = 'component';
+        if (!isset($extSlug) || $extSlug === '/') $extSlug = '';
         $beforeMenu ='';
         $loadMenu = '';
         $afterMenu = '';
         $menuFilePath = DATA . 'ext' . DS . $extType . 's' . DS . $extKey . DS . 'menu' . DS . $menuName . '.json';
         if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
         foreach($menu as $menuItem) {
+            if ($menuItem['menuLink'] === '/') $menuItem['menuLink'] = '';
             if ($mod) {
                 $beforeMenu = '<ul class="m-menu m-menu--' . $mod . '">';
-                $loadMenu = $loadMenu . '<li class="m-menu__item m-menu__item--' . $mod.'"><a class="m-menu__link m-menu__link--' . $mod . '" href="'. $extSlug . DS . $menuItem['menuLink'] . '">' . $menuItem['menuItem'] . '</a></li>';
+                $loadMenu = $loadMenu . '<li class="m-menu__item m-menu__item--' . $mod.'"><a class="m-menu__link m-menu__link--' . $mod . '" href="' . $extSlug . DS . $menuItem['menuLink'] . '">' . $menuItem['menuItem'] . '</a></li>';
                 $afterMenu = '</ul>';
             } else {
                 $beforeMenu = '<ul class="m-menu">';
