@@ -23,14 +23,13 @@ class AdminExt {
     public function run($extRequest, $extAction) {
 
         session_start();
-        $formToken = Auth::formToken();
-        $_SESSION['_token'] = $formToken;
-        $responseStatus = '200';
-        if ($extRequest->request->get('token')) {
+        if (Auth::verifyFormToken()) {
             $login = $extRequest->request->get('login');
             $password = $extRequest->request->get('password');
-            Auth::in($login, $password, $formToken);
+            Auth::in($login, $password);
         }
+        $responseStatus = '200';
+
         if ($extAction === 'logout') { Auth::out(); return new RedirectResponse('/'); }
         $scss = new Scss();
         $scss->setImportPaths([ BASE . 'app/core/oxi',
@@ -45,14 +44,16 @@ class AdminExt {
             $menuMainContent = $this->menu('menuMain', '--horizontal');
             $menuSidebarContent = $this->menu('menuSidebar', '--vertical');
             $adminContent = '';
+            $formToken = '';
         } else {
             $extAction = 'login';
+            $formToken = Auth::generateFormToken();
         }
         $renderedPage = $this->theme([  'menuMainContent' => $menuMainContent,
                                         'menuSidebarContent' => $menuSidebarContent,
                                         'adminContent' => $adminContent],
-                                        $extAction,
-                                        $formToken);
+                                        ['extAction' => $extAction, 'formToken' => $formToken]
+                                        );
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }
@@ -90,7 +91,7 @@ class AdminExt {
      *
      * @return string
      */
-    private function theme($content, $extAction, $formToken) {
+    private function theme($content, $service) {
         $mainConfig = Config::load('app');
         if ($mainConfig['mode'] === 'development') {
             $debugbar = new StandardDebugBar();
@@ -106,15 +107,15 @@ class AdminExt {
         $twigTemplate = new Twig_Environment($templates);
         $twigSkeleton = new Twig_Environment($skeletons);
         $skeleton = $twigSkeleton->loadTemplate('default.twig');
-        if (!$extAction) $extAction = 'index';
-        $renderedPage = $twigTemplate->render($extAction . '.twig',
+        if (!$service['extAction']) $service['extAction'] = 'index';
+        $renderedPage = $twigTemplate->render($service['extAction'] . '.twig',
                 [   'debugbarHead' => $debugbarHead,
                     'debugbarFoot' => $debugbarFoot,
                     'menuMainContent' => $content['menuMainContent'],
                     'menuSidebarContent' => $content['menuSidebarContent'],
                     'adminContent' => $content['adminContent'],
                     'skeleton' => $skeleton,
-                    'formToken' => $formToken
+                    'formToken' => $service['formToken']
                 ]);
         return $renderedPage;
     }
