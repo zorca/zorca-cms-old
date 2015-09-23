@@ -4,7 +4,6 @@ namespace Zorca\Ext;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Zorca\Config;
-use Zorca\Theme;
 use Zorca\Scss;
 use Zorca\Auth;
 use Twig_Loader_Filesystem;
@@ -18,24 +17,23 @@ class AdminExt {
     /**
      * @param $extRequest
      * @param $extAction
+     *
      * @return Response
      */
     public function run($extRequest, $extAction) {
-
         session_start();
+        if ($extAction === 'logout') { Auth::out(); return new RedirectResponse('index'); }
         if (Auth::verifyFormToken()) {
             $login = $extRequest->request->get('login');
             $password = $extRequest->request->get('password');
             Auth::in($login, $password);
         }
         $responseStatus = '200';
-
-        if ($extAction === 'logout') { Auth::out(); return new RedirectResponse('/'); }
         $scss = new Scss();
         $scss->setImportPaths([ BASE . 'app/core/oxi',
-                                BASE . 'app/design/skeletons',
-                                BASE . 'app/ext/components/admin/themes/default/styles']);
-        $scss->compileFile([    BASE. 'app/ext/components/admin/themes/default/styles/main.scss'],
+                                BASE . 'app/ext/components/admin/design/skeletons',
+                                BASE . 'app/ext/components/admin/design/themes/default/styles']);
+        $scss->compileFile([    BASE. 'app/ext/components/admin/design/themes/default/styles/main.scss'],
                                 BASE. 'pub/styles/admin.css');
         $menuMainContent = '';
         $menuSidebarContent = '';
@@ -103,7 +101,7 @@ class AdminExt {
             $debugbarFoot = '';
         }
         $templates = new Twig_Loader_Filesystem(APP . 'ext/components/admin/pages');
-        $skeletons = new Twig_Loader_Filesystem(APP . 'ext/components/admin/skeletons/default');
+        $skeletons = new Twig_Loader_Filesystem(APP . 'ext/components/admin/design/skeletons/default');
         $twigTemplate = new Twig_Environment($templates);
         $twigSkeleton = new Twig_Environment($skeletons);
         $skeleton = $twigSkeleton->loadTemplate('default.twig');
