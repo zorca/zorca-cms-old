@@ -12,29 +12,49 @@ use DebugBar\StandardDebugBar;
  */
 class Theme {
     /**
-     * @param $menuContent
-     * @param $pageContent
+     * @param $content
+     * @param $service
      * @param $extKey
      *
      * @return string
      */
-    public function render($menuContent, $pageContent, $extKey) {
+    static function render($content, $service, $extKey) {
+        $config = Config::load('ext');
+        $extType = 'component';
+        foreach ($config as $configItem) {
+            if ($configItem['extKey'] === $extKey) {
+                $extType = $configItem['extType'];
+            }
+
+        }
         $mainConfig = Config::load('app');
+        $debugbarHead = '';
+        $debugbarFoot = '';
         if ($mainConfig['mode'] === 'development') {
             $debugbar = new StandardDebugBar();
             $debugbarRenderer = $debugbar->getJavascriptRenderer();
             $debugbarHead = $debugbarRenderer->renderHead();
             $debugbarFoot = $debugbarRenderer->render();
-        } else {
-            $debugbarHead = '';
-            $debugbarFoot = '';
+
         }
-        $templates = new Twig_Loader_Filesystem(APP . 'design/themes' . DS . $mainConfig['theme'] . DS . 'templates/ext');
-        $skeletons = new Twig_Loader_Filesystem(APP . 'design/skeletons/' . $mainConfig['skeleton']);
-        $twigTemplate = new Twig_Environment($templates);
-        $twigSkeleton = new Twig_Environment($skeletons);
-        $skeleton = $twigSkeleton->loadTemplate($mainConfig['skeleton'] . '.twig');
-        $renderedPage = $twigTemplate->render($extKey . '.twig', ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'menuContent' => $menuContent, 'pageContent' => $pageContent, 'skeleton' => $skeleton]);
+
+        if ($extKey === 'admin') {
+            $adminDesignPath = APP . 'ext/components/admin' . DS . 'design';
+            $templates = new Twig_Loader_Filesystem($adminDesignPath . DS . 'themes' . DS .  $mainConfig['themeAdmin'] . DS . 'templates');
+            $skeletons = new Twig_Loader_Filesystem($adminDesignPath . DS . 'skeletons' . DS . $mainConfig['skeletonAdmin']);
+            $twigTemplate = new Twig_Environment($templates);
+            $twigSkeleton = new Twig_Environment($skeletons);
+            $skeleton = $twigSkeleton->loadTemplate($mainConfig['skeletonAdmin'] . '.twig');
+        } else {
+            $extDesignPath = APP . 'design';
+            $templates = new Twig_Loader_Filesystem($extDesignPath . DS . 'themes' . DS . $mainConfig['theme'] . DS . 'templates');
+            $skeletons = new Twig_Loader_Filesystem($extDesignPath . DS . 'skeletons' . DS . $mainConfig['skeleton']);
+            $twigTemplate = new Twig_Environment($templates);
+            $twigSkeleton = new Twig_Environment($skeletons);
+            $skeleton = $twigSkeleton->loadTemplate($mainConfig['skeleton'] . '.twig');
+        }
+        $content = array_merge($content, ['debugbarHead' => $debugbarHead, 'debugbarFoot' => $debugbarFoot, 'skeleton' => $skeleton]);
+        $renderedPage = $twigTemplate->render($extKey . '.twig', $content);
         return $renderedPage;
     }
 }

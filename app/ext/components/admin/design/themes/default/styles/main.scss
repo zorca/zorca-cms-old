@@ -38,7 +38,7 @@
 .m-logo {
   font-size: 1.25rem;
   font-weight: 700;
-  padding: 1rem 0.5rem;
+  padding: 1rem;
 }
 
 .m-menu {
@@ -62,16 +62,19 @@
 }
 
 .c-admin-form {
-  padding-top: 10rem;
+  padding-top: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin: 0 auto;
   max-width: 30rem;
   width: 100%;
   text-align: center;
+  font-weight: bold;
   &__input {
     font-size: 1.25rem;
     text-align: center;
     width: 100%;
-    color: #b2b2b2;
+    color: #666;
     border-radius: 0.25rem;
     border: 2px solid #b2b2b2;
     padding: 0.5rem 1.5rem;
@@ -79,11 +82,13 @@
   }
   &__button {
     width: 100%;
-    font-weight: bold;
     text-transform: uppercase;
     background: $color3 none repeat scroll 0 0;
     border: medium none;
     border-radius: 0.25rem;
     padding: 0.75em 1.5em;
+    &:hover, &:focus {
+      background: darken($color3, 5%) none repeat scroll 0 0;
+    }
   }
 }

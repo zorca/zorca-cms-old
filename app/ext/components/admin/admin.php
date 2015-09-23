@@ -57,6 +57,33 @@ class AdminExt {
     }
 
     /**
+     * Вывод меню администратора
+     *
+     * @param $menuName
+     * @param $mod
+     *
+     * @return string
+     */
+    private function menu($menuName, $mod) {
+        $config = Config::load('ext');
+        $adminSlug = '/admin';
+        foreach ($config as $configItem) {
+            if ($configItem['extKey'] === 'admin') $adminSlug = $configItem['extSlug'];
+        }
+        $beforeMenu = '<ul class="m-menu">';
+        $loadMenu = '';
+        $afterMenu = '</ul>';
+        $menuFilePath = APP . 'ext/components/admin/menu/' . $menuName . '.json';
+        // Если файл конфига не существует, то отдаем пустой массив
+        if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
+        foreach($menu as $menuItem) {
+            $loadMenu = $loadMenu . '<li class="m-menu__item m-menu__item' . $mod . '"><a class="m-menu__link" href="' . $adminSlug . DS . $menuItem['menuLink'] . '">' . $menuItem['menuItem'] . '</a></li>';
+        }
+        $loadMenu = $beforeMenu . $loadMenu . $afterMenu;
+        return $loadMenu;
+    }
+
+    /**
      * Тема административной панели
      *
      * @param $content
