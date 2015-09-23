@@ -27,8 +27,7 @@ class PagesExt {
             $responseStatus = '404';
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));
-        $menu = new Menu();
-        $menuContent = $menu->load('menuMain');
+        $menuContent = MenuMod::load('pages', 'menuMain', 'horizontal');
         $scss = new Scss();
         $scss->setImportPaths([BASE . 'app/design/themes/default/styles', BASE . 'app/core/oxi', BASE . 'app/design/skeletons']);
         $scss->compileFile([BASE. 'app/design/themes/default/styles/main.scss'], BASE. 'pub/styles/main.css');

@@ -39,8 +39,8 @@ class AdminExt {
         $menuSidebarContent = '';
         $adminContent = '';
         if (Auth::is()) {
-            $menuMainContent = $this->menu('menuMain', '--horizontal');
-            $menuSidebarContent = $this->menu('menuSidebar', '--vertical');
+            $menuMainContent = MenuMod::load('admin', 'menuMain', 'horizontal');
+            $menuSidebarContent =  MenuMod::load('admin', 'menuSidebar', 'vertical');
             $adminContent = '';
             $formToken = '';
         } else {
@@ -54,33 +54,6 @@ class AdminExt {
                                         );
         $response = new Response($renderedPage, $responseStatus);
         return $response;
-    }
-
-    /**
-     * Вывод меню администратора
-     *
-     * @param $menuName
-     * @param $mod
-     *
-     * @return string
-     */
-    private function menu($menuName, $mod) {
-        $config = Config::load('ext');
-        $adminSlug = '/admin';
-        foreach ($config as $configItem) {
-            if ($configItem['extKey'] === 'admin') $adminSlug = $configItem['extSlug'];
-        }
-        $beforeMenu = '<ul class="m-menu">';
-        $loadMenu = '';
-        $afterMenu = '</ul>';
-        $menuFilePath = APP . 'ext/components/admin/menu/' . $menuName . '.json';
-        // Если файл конфига не существует, то отдаем пустой массив
-        if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
-        foreach($menu as $menuItem) {
-            $loadMenu = $loadMenu . '<li class="m-menu__item m-menu__item' . $mod . '"><a class="m-menu__link" href="' . $adminSlug . DS . $menuItem['menuLink'] . '">' . $menuItem['menuItem'] . '</a></li>';
-        }
-        $loadMenu = $beforeMenu . $loadMenu . $afterMenu;
-        return $loadMenu;
     }
 
     /**
