@@ -57,7 +57,10 @@ class AdminExt {
     }
 
     /**
-     * Меню панели администратора
+     * Вывод меню администратора
+     *
+     * @param $menuName
+     * @param $mod
      *
      * @return string
      */
@@ -83,9 +86,8 @@ class AdminExt {
     /**
      * Тема административной панели
      *
-     * @param $menuContent
-     * @param $adminContent
-     * @param $extAction
+     * @param $content
+     * @param $service
      *
      * @return string
      */
