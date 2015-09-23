@@ -14,9 +14,27 @@ class Auth {
      *
      * @return string
      */
-    static function formToken() {
+    static function generateFormToken() {
         $token = md5(uniqid(microtime(), true));
+        $_SESSION['_token'] = $token;
         return $token;
+    }
+    /**
+     * Проверка секретного токена для формы
+     *
+     * @return string
+     */
+    static function verifyFormToken() {
+        if(!isset($_SESSION['_token'])) {
+            return false;
+        }
+        if(!isset($_POST['token'])) {
+            return false;
+        }
+        if ($_SESSION['_token'] !== $_POST['token']) {
+            return false;
+        }
+        return true;
     }
     /**
      * Проверка, авторизован ли администратор
@@ -37,9 +55,9 @@ class Auth {
      * @param $password
      * @return bool
      */
-    static function in($login, $password, $formToken) {
+    static function in($login, $password) {
         $cred = Config::load('admin');
-        if ($login === $cred['login'] && password_verify($password, $cred['password']) && $_SESSION['_token'] === $formToken) {
+        if ($login === $cred['login'] && password_verify($password, $cred['password'])) {
             $_SESSION["is_auth"] = true;
             $_SESSION["login"] = $login;
             return true;

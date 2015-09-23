@@ -8,7 +8,7 @@
     "menuLink": "themes"
   },
   {
-    "menuItem": "Настройки",
-    "menuLink": "settings"
+    "menuItem": "Выйти",
+    "menuLink": "logout"
   }
 ]

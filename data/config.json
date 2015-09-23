@@ -1,6 +1,10 @@
 {
   "offline": false,
   "mode": "development",
+  "palette": "default",
   "skeleton": "default",
-  "theme": "default"
+  "theme": "default",
+  "paletteAdmin": "default",
+  "skeletonAdmin": "default",
+  "themeAdmin": "default"
 }

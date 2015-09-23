@@ -1,0 +1,27 @@
+/* Скелет админки Default */
+
+// Настройки скелета
+
+// Прибитый вниз футер
+html, body {
+  height: 100%;
+}
+.z-wrap {
+  width: 100%;
+
+}
+
+// Сетка
+html { min-width: 100%; } // Фикс пропадания фона при уменьшении окна
+
+.z-row {
+  @include make-row();
+}
+
+.z-content {
+  @include make-col();
+  @include make-col-span(8);
+  &--full {
+    @include make-col-span(12);
+  }
+}

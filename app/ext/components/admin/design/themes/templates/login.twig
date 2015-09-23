@@ -1,0 +1,13 @@
+{% extends skeleton %}
+{% block zAll %}
+    <div class="c-admin-form">
+        <h1>Zorca CMS</h1>
+        <h2>Панель управления</h2>
+        <form  method="POST" action="">
+            <input type="hidden" name="token" value="{{ formToken|raw }}">
+            <input class="c-admin-form__input" type="text" name="login" id="login" placeholder="Логин">
+            <input class="c-admin-form__input" type="password" name="password" id="password" placeholder="Пароль">
+            <input type="submit" class="c-admin-form__button" value="Войти">
+        </form>
+    </div>
+{% endblock %}

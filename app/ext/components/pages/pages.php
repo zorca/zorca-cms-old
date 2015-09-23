@@ -23,17 +23,15 @@ class PagesExt {
         $parsedown = new ParsedownExtra();
         $pageContentFilePath = DATA . 'ext/components/pages' . DS . $extAction . '.md';
         if (!file_exists($pageContentFilePath)) {
-            $pageContentFilePath = APP . 'ext/components/pages/errorpages/404.md';
+            $pageContentFilePath = APP . 'ext/components/pages/content/404.md';
             $responseStatus = '404';
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));
-        $menu = new Menu();
-        $menuContent = $menu->load('menuMain');
+        $menuContent = MenuMod::load('pages', 'menuMain', 'horizontal');
         $scss = new Scss();
         $scss->setImportPaths([BASE . 'app/design/themes/default/styles', BASE . 'app/core/oxi', BASE . 'app/design/skeletons']);
         $scss->compileFile([BASE. 'app/design/themes/default/styles/main.scss'], BASE. 'pub/styles/main.css');
-        $theme = new Theme();
-        $renderedPage = $theme->render($menuContent, $pageContent, 'pages');
+        $renderedPage = Theme::render(['menuContent' => $menuContent, 'pageContent' => $pageContent, 'skeleton' => 'default'], '', 'pages');
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }

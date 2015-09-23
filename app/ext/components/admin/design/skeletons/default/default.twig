@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% block zHead %}
+        <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=cyrillic' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/pub/styles/admin.css">
+    {% endblock %}
+    {{ debugbarHead|raw }}
+</head>
+<body class="z-body">
+    <div class="z-wrap">
+        {% block zAll %}
+        {% endblock %}
+    </div>
+    {% block zFoot %}
+    {% endblock %}
+    {{ debugbarFoot|raw }}
+</body>
+</html>
