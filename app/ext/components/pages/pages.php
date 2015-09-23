@@ -3,7 +3,7 @@ namespace Zorca\Ext;
 
 use Symfony\Component\HttpFoundation\Response;
 use ParsedownExtra;
-use Zorca\Theme;
+use Zorca\Template;
 use Zorca\Scss;
 
 /**
@@ -28,10 +28,7 @@ class PagesExt {
         }
         $pageContent = $parsedown->text(file_get_contents($pageContentFilePath));
         $menuContent = MenuMod::load('pages', 'menuMain', 'horizontal');
-        $scss = new Scss();
-        $scss->setImportPaths([BASE . 'app/design/themes/default/styles', BASE . 'app/core/oxi', BASE . 'app/design/skeletons']);
-        $scss->compileFile([BASE. 'app/design/themes/default/styles/main.scss'], BASE. 'pub/styles/main.css');
-        $renderedPage = Theme::render(['menuContent' => $menuContent, 'pageContent' => $pageContent, 'skeleton' => 'default'], '', 'pages');
+        $renderedPage = Template::render(['menuContent' => $menuContent, 'pageContent' => $pageContent, 'skeleton' => 'default'], '', 'pages');
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }

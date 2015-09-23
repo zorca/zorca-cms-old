@@ -20,6 +20,24 @@ class Zorca {
         try {
             $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
             $matchResult = $matcher->match($request->getPathInfo());
+            $scss = new Scss();
+            if ($matchResult['_route'] === 'admin') {
+                $scss->setImportPaths([
+                    BASE . 'app/core/oxi',
+                    BASE . 'app/ext/components/admin/design/skeletons',
+                    BASE . 'app/ext/components/admin/design/themes/default/styles']);
+                $scss->compileFile([
+                    BASE . 'app/ext/components/admin/design/themes/default/styles/main.scss'],
+                    BASE . 'pub/styles/admin.css');
+            } else {
+                $scss->setImportPaths([
+                    BASE . 'app/core/oxi',
+                    BASE . 'app/design/skeletons',
+                    BASE . 'app/design/themes/default/styles']);
+                $scss->compileFile([
+                    BASE . 'app/design/themes/default/styles/main.scss'],
+                    BASE . 'pub/styles/main.css');
+            }
             $extClass = 'Zorca\Ext\\' . ucfirst($matchResult['_route']) . 'Ext';
             $extController = new $extClass;
             $response = $extController->run($request, $matchResult['extAction']);

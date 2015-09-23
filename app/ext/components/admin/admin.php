@@ -3,15 +3,12 @@ namespace Zorca\Ext;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Zorca\Config;
-use Zorca\Scss;
 use Zorca\Auth;
-use Zorca\Theme;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use DebugBar\StandardDebugBar;
+use Zorca\Template;
+
 /**
  * Class AdminExt
+ *
  * @package Zorca\Ext
  */
 class AdminExt {
@@ -19,7 +16,7 @@ class AdminExt {
      * @param $extRequest
      * @param $extAction
      *
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function run($extRequest, $extAction) {
         session_start();
@@ -30,12 +27,6 @@ class AdminExt {
             Auth::in($login, $password);
         }
         $responseStatus = '200';
-        $scss = new Scss();
-        $scss->setImportPaths([ BASE . 'app/core/oxi',
-                                BASE . 'app/ext/components/admin/design/skeletons',
-                                BASE . 'app/ext/components/admin/design/themes/default/styles']);
-        $scss->compileFile([    BASE. 'app/ext/components/admin/design/themes/default/styles/main.scss'],
-                                BASE. 'pub/styles/admin.css');
         $menuMainContent = '';
         $menuSidebarContent = '';
         $adminContent = '';
@@ -48,7 +39,7 @@ class AdminExt {
             $extAction = 'login';
             $formToken = Auth::generateFormToken();
         }
-        $renderedPage = $renderedPage = Theme::render([
+        $renderedPage = $renderedPage = Template::render([
             'menuMainContent' => $menuMainContent,
             'menuSidebarContent' => $menuSidebarContent,
             'adminContent' => $adminContent],

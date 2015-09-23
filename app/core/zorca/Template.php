@@ -6,11 +6,11 @@ use Twig_Environment;
 use DebugBar\StandardDebugBar;
 
 /**
- * Class Theme
+ * Class Template
  *
  * @package Zorca
  */
-class Theme {
+class Template {
     /**
      * @param $content
      * @param $service
