@@ -1,0 +1,14 @@
+[
+  {
+    "menuItem": "Страницы",
+    "menuLink": "pages"
+  },
+  {
+    "menuItem": "Блоги",
+    "menuLink": "blogs"
+  },
+  {
+    "menuItem": "Настройки",
+    "menuLink": "settings"
+  }
+]

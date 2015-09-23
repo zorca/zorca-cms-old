@@ -36,17 +36,23 @@ class AdminExt {
         $scss->setImportPaths([ BASE . 'app/core/oxi',
                                 BASE . 'app/design/skeletons',
                                 BASE . 'app/ext/components/admin/themes/default/styles']);
-        $scss->compileFile([    BASE. 'app/design/themes/default/styles/main.scss'],
+        $scss->compileFile([    BASE. 'app/ext/components/admin/themes/default/styles/main.scss'],
                                 BASE. 'pub/styles/admin.css');
-        $menuContent = '';
+        $menuMainContent = '';
+        $menuSidebarContent = '';
         $adminContent = '';
         if (Auth::is()) {
-            $menuContent = $this->menu('menuMain');
+            $menuMainContent = $this->menu('menuMain', '--horizontal');
+            $menuSidebarContent = $this->menu('menuSidebar', '--vertical');
             $adminContent = '';
         } else {
             $extAction = 'login';
         }
-        $renderedPage = $this->theme($menuContent, $adminContent, $extAction, $formToken);
+        $renderedPage = $this->theme([  'menuMainContent' => $menuMainContent,
+                                        'menuSidebarContent' => $menuSidebarContent,
+                                        'adminContent' => $adminContent],
+                                        $extAction,
+                                        $formToken);
         $response = new Response($renderedPage, $responseStatus);
         return $response;
     }
@@ -56,7 +62,7 @@ class AdminExt {
      *
      * @return string
      */
-    private function menu($menuName) {
+    private function menu($menuName, $mod) {
         $config = Config::load('ext');
         $adminSlug = '/admin';
         foreach ($config as $configItem) {
@@ -64,12 +70,12 @@ class AdminExt {
         }
         $beforeMenu = '<ul class="m-menu">';
         $loadMenu = '';
-        $afterMenu = '<li class="m-menu__item"><a class="m-menu__link" href="' . $adminSlug . DS . 'logout' . '">' . 'Выйти' . '</a></li></ul>';
+        $afterMenu = '</ul>';
         $menuFilePath = APP . 'ext/components/admin/menu/' . $menuName . '.json';
         // Если файл конфига не существует, то отдаем пустой массив
         if (file_exists($menuFilePath)) $menu = json_decode(file_get_contents($menuFilePath), true); else $menu = [];
         foreach($menu as $menuItem) {
-            $loadMenu = $loadMenu . '<li class="m-menu__item"><a class="m-menu__link" href="' . $adminSlug . DS . $menuItem['menuLink'] . '">' . $menuItem['menuItem'] . '</a></li>';
+            $loadMenu = $loadMenu . '<li class="m-menu__item m-menu__item' . $mod . '"><a class="m-menu__link" href="' . $adminSlug . DS . $menuItem['menuLink'] . '">' . $menuItem['menuItem'] . '</a></li>';
         }
         $loadMenu = $beforeMenu . $loadMenu . $afterMenu;
         return $loadMenu;
@@ -84,7 +90,7 @@ class AdminExt {
      *
      * @return string
      */
-    private function theme($menuContent, $adminContent, $extAction, $formToken) {
+    private function theme($content, $extAction, $formToken) {
         $mainConfig = Config::load('app');
         if ($mainConfig['mode'] === 'development') {
             $debugbar = new StandardDebugBar();
@@ -101,12 +107,12 @@ class AdminExt {
         $twigSkeleton = new Twig_Environment($skeletons);
         $skeleton = $twigSkeleton->loadTemplate('default.twig');
         if (!$extAction) $extAction = 'index';
-
         $renderedPage = $twigTemplate->render($extAction . '.twig',
                 [   'debugbarHead' => $debugbarHead,
                     'debugbarFoot' => $debugbarFoot,
-                    'menuContent' => $menuContent,
-                    'adminContent' => $adminContent,
+                    'menuMainContent' => $content['menuMainContent'],
+                    'menuSidebarContent' => $content['menuSidebarContent'],
+                    'adminContent' => $content['adminContent'],
                     'skeleton' => $skeleton,
                     'formToken' => $formToken
                 ]);

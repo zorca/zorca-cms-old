@@ -4,51 +4,15 @@
     {% block zHead %}
         <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=cyrillic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/pub/styles/main.css">
+        <link rel="stylesheet" href="/pub/styles/admin.css">
     {% endblock %}
     {{ debugbarHead|raw }}
 </head>
 <body class="z-body">
     <div class="z-wrap">
-        {% if block('zHeader') %}
-            <header class="z-header">
-                <div class="z-container">
-                    <div class="z-row">
-                        {% block zHeader %}
-                            {{  menuContent|raw }}
-                        {% endblock %}
-                    </div>
-                </div>
-            </header>
-        {% endif %}
-        <div class="z-main">
-            <div class="z-container">
-                <div class="z-row">
-                    {% set zContent,zSidebar = block('zContent'), block('zSidebar') %}
-                    {% if block('zSidebar') %}
-                        <div class="z-content">
-                            {{ zContent|raw }}
-                        </div>
-                        <div class="z-sidebar">
-                            {{ zSidebar|raw }}
-                        </div>
-                    {% else %}
-                        <div class="z-content--full">
-                            {{ zContent|raw }}
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+        {% block zAll %}
+        {% endblock %}
     </div>
-    <footer class="z-footer">
-        <div class="z-container">
-            <div class="z-row">
-                {% block zFooter %}
-                {% endblock %}
-            </div>
-        </div>
-    </footer>
     {% block zFoot %}
     {% endblock %}
     {{ debugbarFoot|raw }}
