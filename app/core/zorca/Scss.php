@@ -16,7 +16,7 @@
         }
 
         public function compileFile($in, $out) {
-            $this->scss = '@charset "utf-8";';
+            $this->resetScss();
             foreach ($in as $inItem) {
                 $this->importPath($inItem);
             }
@@ -31,6 +31,18 @@
             return file_put_contents($out, $css);
         }
 
+        public function resetScss() {
+            $this->scss = '@charset "utf-8";';
+        }
+
+        public function setScss($scss) {
+            $this->scss = $scss;
+        }
+
+        public function appendScss($scss) {
+            $this->scss .= PHP_EOL . $scss;
+        }
+
         private function importPath($scssFile) {
             $scss = '';
             $path = pathinfo($scssFile);
@@ -41,7 +53,7 @@
                 $scss = file_get_contents($scssFile);
             }
             if (!empty($scss)) {
-                $this->scss .= PHP_EOL . $scss;
+                $this->appendScss($scss);
                 preg_match_all('%(//)?.*@import\s*"(.*)"%i', $scss, $result, PREG_PATTERN_ORDER);
                 for ($i = 0; $i < count($result[0]); $i++) {
                     if (empty($result[1][$i])) {
