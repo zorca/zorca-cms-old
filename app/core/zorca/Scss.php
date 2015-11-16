@@ -11,9 +11,7 @@
 
         public function compile($scss) {
             $compiler = new Compiler();
-            foreach ($this->importPath as $path) {
-                $compiler->addImportPath($path);
-            }
+            $compiler->setImportPaths($this->importPath);
             return $compiler->compile($scss);
         }
 
