@@ -17,6 +17,7 @@
 
         public function compileFile($in, $out) {
             $this->resetScss();
+
             foreach ($in as $inItem) {
                 $this->importPath($inItem);
             }
@@ -47,10 +48,10 @@
             $scss = '';
             $path = pathinfo($scssFile);
             if (file_exists($pathRelateImport = $scssFile) ||
-                file_exists($pathRelateImport = (isset($path['extension']) ? $scssFile . '.scss' : '')) ||
-                file_exists($pathRelateImport = dirname($scssFile) . '/_' . basename($scssFile) . (isset($path['extension']) ? $scssFile . '.scss' : ''))
+                file_exists($pathRelateImport = $scssFile . (!isset($path['extension']) ? '.scss' : '')) ||
+                file_exists($pathRelateImport = dirname($scssFile) . '/_' . basename($scssFile) . (!isset($path['extension']) ? '.scss' : ''))
             ) {
-                $scss = file_get_contents($scssFile);
+                $scss = file_get_contents($pathRelateImport);
             }
             if (!empty($scss)) {
                 $this->appendScss($scss);
