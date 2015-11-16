@@ -1,5 +1,16 @@
 /* Скелет Default */
 
+@import "../../../core/oxi/functions";
+@import "../../../core/oxi/variables";
+@import "../../../core/oxi/clearfix";
+@import "../../../core/oxi/hover";
+@import "../../../core/oxi/tab-focus";
+@import "../../../core/oxi/grid";
+@import "../../../core/oxi/normalize";
+@import "../../../core/oxi/print";
+@import "../../../design/themes/default/styles/config";
+@import "../../../core/oxi/reboot";
+
 // Настройки скелета
 $z-container-width: 60rem!default;
 $z-footer-height: 4rem!default;

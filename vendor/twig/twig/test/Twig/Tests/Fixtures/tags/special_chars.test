@@ -1,8 +1,0 @@
---TEST--
-"Р’В§" custom tag
---TEMPLATE--
-{% Р’В§ %}
---DATA--
-return array()
---EXPECT--
-Р’В§

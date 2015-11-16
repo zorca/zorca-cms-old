@@ -1,5 +1,8 @@
 /* Основной стиль шаблона */
 
+//@import "config";
+@import "01-base";
+
 .z-content, .z-sidebar, .z-footer {padding: 1rem;}
 
 .z-header { background: lighten($color4, 30%) none repeat scroll 0 0; }

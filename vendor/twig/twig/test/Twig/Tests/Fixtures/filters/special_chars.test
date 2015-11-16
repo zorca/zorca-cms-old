@@ -1,8 +1,0 @@
---TEST--
-"Р’В§" custom filter
---TEMPLATE--
-{{ 'foo'|Р’В§ }}
---DATA--
-return array()
---EXPECT--
-Р’В§fooР’В§
